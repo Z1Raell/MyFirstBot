@@ -1,5 +1,5 @@
 const restify = require("restify");
-const cron = require('node-cron');
+
 const { ActionTypes, TurnContext, CardFactory, ActivityTypes } = require("botbuilder");
 
 const {
@@ -42,33 +42,10 @@ server.post("/api/messages", async (req, res) => {
   });
 });
 
-cron.schedule("*/1 * * * *", async () => {
-  const eventActivity = {
-    callerId: { id: 'some-id' },
-    type: ActivityTypes.Event,
-    name: "ScheduledMessage",
-    value: { text: "Ваше сообщение здесь" }
-  };
-  console.log(eventActivity); // Log the eventActivity object for debugging
-  
-  await adapter.processActivityDirect('', eventActivity, async (context) => {
-    await bot.run(context);
-  });
-});
+
 
 server.post("/api/scheduler", async (req, res) => {
-  const eventActivity = {
-    callerId: { id: 'some-id' },
-    type: 'event',
-    name: "ScheduledMessage",
-    value: { text: "Ваше сообщение здесь" }
-  };
-  
-  console.log(eventActivity); // Log the eventActivity object for debugging
-  
-  await adapter.processActivityDirect('', eventActivity, async (context) => {
-    await bot.run(context);
-  });
+  console.log(req.body);
   res.send(200);
 });
 
